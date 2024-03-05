@@ -16,17 +16,12 @@ public class CuentaCorriente {
 	 */
 	private double saldo;
 
-	/**
-	 * Constructor sin parametros de la clase CuentaCorriente
-	 */
-	public CuentaCorriente() {
-		super();
-	}
+
 	/**
 	 * Constructor con parametros (dni y saldo) de la clase CuentaCorriente
 	 */
 	public CuentaCorriente(String dni, int saldo) {
-		super();
+		
 		if (dni != null && !dni.equals("") && dni.length() == 9) {
 			this.dni = dni;
 		}
