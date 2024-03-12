@@ -27,6 +27,24 @@ public class Gestisimal {
 		return anyadido;
 	}
 	
+	public static boolean baja(Articulo art) {
+		int codigo;
+		int i = 0;
+		boolean borrado = false;
+		
+		codigo = art.getCodigo();
+		
+		while(i < articulos.length && codigo != articulos[i].getCodigo()) {
+			i++;			
+		}
+		if(i < articulos.length) {
+			articulos[i] = null;
+			borrado = true;
+		}
+		
+		return borrado;
+	}
+	
 	private static boolean buscaArticulo(Articulo art) {
 		int i = 0;
 		boolean enc = false;
