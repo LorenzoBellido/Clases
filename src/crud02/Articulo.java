@@ -72,6 +72,16 @@ public class Articulo {
 		}
 		
 	} // fin constructor
+	
+	
+
+	public Articulo(int codigo) {
+		if(codigo>0) {
+			this.codigo = codigo;
+		}
+	}
+	
+	
 
 	/**
 	 * Devuelve el código del producto
@@ -154,9 +164,9 @@ public class Articulo {
 	public boolean equals(Object obj) {
 		boolean iguales = false;
 		
-		Articulo art2 = (Articulo) obj;
+		Articulo art = (Articulo) obj;
 		
-		if(this.codigo == art2.codigo) {
+		if(this.codigo == art.codigo) {
 			iguales = true;
 		}
 		

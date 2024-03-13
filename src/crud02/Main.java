@@ -18,6 +18,8 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("BIENVENIDO A GESTISIMAL");
+		
+		do {
 		menu();
 
 		opc = sc.nextInt();
@@ -25,7 +27,7 @@ public class Main {
 
 		switch (opc) {
 		case 1 -> {
-
+			Gestisimal.listado();
 		}
 
 		case 2 -> {
@@ -60,10 +62,16 @@ public class Main {
 			System.out.println("Introduzca el código");
 			codigo = sc.nextInt();
 			sc.nextLine();
-		
+			
+		}
+		case 4 ->{
+			System.out.println("Introduzca el código");
+			codigo = sc.nextInt();
+			sc.nextLine();
+			
 		}
 		}
-
+		}while(opc != 7);
 		sc.close();
 	}
 
