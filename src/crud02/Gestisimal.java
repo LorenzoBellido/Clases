@@ -1,32 +1,43 @@
 package crud02;
 
+import java.util.Scanner;
+
 public class Gestisimal {
+	static Scanner sc = new Scanner(System.in);
 
 	public static Articulo[] articulos = new Articulo[20];
 
 	public static void listado() {
 		int i = 0;
-
 		while (i < articulos.length && articulos[i] != null) {
 			System.out.println(articulos[i]);
 			i++;
 		}
 	}
 
+	public static int busqueda(Articulo art) {
+		int pos = -1;
+		int i = 0;
+		while (i < articulos.length && pos == -1) {
+			if (articulos[i] != null && articulos[i].equals(art)) {
+				pos = i;
+			}
+			i++;
+		}
+
+		return pos;
+	}
+
 	public static boolean alta(Articulo art) {
 		boolean anyadido = false;
 
-		// 1º Comprobar si el artículo ya existe
+		int pos = busqueda(art);
 		int i = 0;
-		int pos = buscaArticulo(art);
 
-		// Si no he encontrado el artículo lo tengo que añadir
 		if (pos == -1) {
-
 			while (i < articulos.length && articulos[i] != null) {
 				i++;
 			}
-
 			if (i < articulos.length) {
 				articulos[i] = art;
 				anyadido = true;
@@ -37,41 +48,105 @@ public class Gestisimal {
 	}
 
 	public static boolean baja(Articulo art) {
-		int codigo;
-		boolean borrado = false;
-
-		codigo = art.getCodigo();
+		boolean eliminado = false;
 		int i = 0;
-		int pos = buscaArticulo(art);
-
-		if (pos >= 0) {
-			while (i < articulos.length && codigo != articulos[i].getCodigo()) {
-				i++;
-			}
-			if (i < articulos.length) {
-				articulos[i] = null;
-				borrado = true;
-			}
-		}
-		return borrado;
-	}
-
-	public static int buscaArticulo(Articulo art) {
-		int i = 0;
-		int pos = -1;
-
-		while (i < articulos.length && pos == -1) {
-			// Compruebo que la posición no sea null
-			// Compruebo si el artículo de la posición i es igual a art (artículo pasado por
-			// parámetro)
-			if (articulos[i] != null && articulos[i].equals(art)) {
-				pos = i;
-			}
-
+		while (!articulos[i].equals(art) && !eliminado) {
 			i++;
 		}
+		if (i < articulos.length) {
+			articulos[i] = null;
+			eliminado = true;
+		}
 
-		return pos;
+		return eliminado;
 	}
 
+	public static boolean modificacion(int codigo, int opc) {
+		boolean modificado = true;
+		int opcion = opc;
+		int i = 0;
+		String descripcion = "";
+		double precioVenta = 0;
+		double precioCompra = 0;
+
+		while(i < articulos.length && articulos[i] != null && codigo != articulos[i].getCodigo()) {
+		i++;
+		}
+		if(articulos[i] == null) {
+			i = articulos.length;
+			modificado = false;
+		}
+			if(i < articulos.length && codigo == articulos[i].getCodigo()) {
+			switch (opcion) {
+			case 1 -> {
+				descripcion = sc.nextLine();
+				articulos[i].setDescripcion(descripcion);
+			}
+			case 2 -> {
+				precioCompra = sc.nextDouble();
+				articulos[i].setPrecioCompra(precioCompra);
+				sc.nextLine();
+			}
+			case 3 -> {
+				precioVenta = sc.nextDouble();
+				articulos[i].setPrecioVenta(precioVenta);
+				sc.nextLine();
+			}
+
+			default -> {
+				System.out.println("Dato no comprendido");
+			}
+			}
+			
+		}else {
+			modificado = false;
+		}
+		
+		return modificado;
+	}
+	
+	public static boolean entradaMercancia(int codigo, int cantidad) {
+		boolean entrada = false;
+		int i = 0;
+		int nuevoStock;
+		
+		if(articulos[i] == null) {
+			i = articulos.length;
+		}
+		while(i < articulos.length && articulos[i] != null && codigo != articulos[i].getCodigo()) {
+			i++;
+			}
+				if(i < articulos.length && codigo == articulos[i].getCodigo()) {
+					nuevoStock = articulos[i].getStock() + cantidad;
+					articulos[i].setStock(nuevoStock);
+					entrada = true;
+				}
+		
+				
+		return entrada;
+	}
+	
+	public static boolean salidaMercancia(int codigo, int cantidad) {
+		boolean salida = false;
+		int i = 0;
+		int nuevoStock;
+		
+		if(articulos[i] == null) {
+			i = articulos.length;
+		}
+		while(i < articulos.length && articulos[i] != null && codigo != articulos[i].getCodigo()) {
+			i++;
+			}
+				if(i < articulos.length && codigo == articulos[i].getCodigo()) {
+					nuevoStock = articulos[i].getStock();
+					if(nuevoStock >= cantidad) {
+						nuevoStock -= cantidad;
+						articulos[i].setStock(nuevoStock);
+						salida = true;
+					}
+				}
+		
+				
+		return salida;
+	}
 }
